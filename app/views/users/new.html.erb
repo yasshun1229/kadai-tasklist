@@ -1,2 +1,32 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h1>ユーザー登録</h1>
+
+<div class="signup_form">
+  <%= form_with(model: @user) do |f| %>
+  
+    <section class="name">
+      <%= f.label :name, "ユーザー名" %>
+      <%= f.text_field :name %>
+    </section>
+    
+    <section class="E-mail">
+      <%= f.label :email, "Eメール" %>
+      <%= f.email_field :email %>
+    </section>
+    
+    <section class="password">
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password %>
+    </section>
+    
+    <section class="password_confirmation">
+      <%= f.label :password_confirmation, "パスワード確認" %>
+      <%= f.password_field :password_confirmation %>
+    </section>
+
+  <%= f.submit "登録する" %>
+<% end %>
+
+  <%= form_with(model: @user) do |f| %>
+    <%= render "layouts/error_messages", model: f.object %>
+  <% end %>
+</div>

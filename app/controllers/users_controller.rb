@@ -1,12 +1,4 @@
 class UsersController < ApplicationController
-  def index
-    @users = User.order(id: :desc)
-  end
-
-  def show
-    @user = User.find(params[:id])
-  end
-
   def new
     @user = User.new
   end
@@ -15,15 +7,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      flash[:success] = "ユーザーを登録しました"
-      redirect_to @user
+      flash[:success] = "ユーザー登録しました"
+      redirect_to tasks_path
     else
-      flash.now[:danger] = "ユーザーの登録に失敗しました"
+      flash.now[:danger] = "ユーザー登録に失敗しました"
       render :new
     end
   end
   
-  # Strong Paramter
   private
   
   def user_params

@@ -11,12 +11,5 @@
   </ul>
   
   <%= link_to "新規タスクの追加", new_task_path %>
-
-<% else %>
-    <h1>ユーザ登録をしてください。</h1>
-    <%= link_to "ユーザー登録", signup_path %>
-    
-    <h1>登録済であれば、ログインしてください</h1>
-    <%= link_to "ログイン", login_path %>
-    
+  <%= link_to "ログアウト", login_path %>
 <% end %>

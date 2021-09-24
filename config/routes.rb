@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   get "signup", to: "users#new"
   resources :tasks, :users, only: [:index, :show, :create, :new, :edit, :destroy, :update]
   
-  
-  post "login", to: "users#create"
+  post "login", to: "sessions#new"
   resources :tasks, :users, only: [:index, :show, :create, :new, :edit, :destroy, :update]
   
   delete "logout", to: "users#destroy"

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :requrie_user_logged_in, only: [:index, :show]
   
   def new
     @user = User.new

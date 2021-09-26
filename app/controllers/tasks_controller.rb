@@ -15,7 +15,7 @@ class TasksController < ApplicationController
   end
   
   def create
-    @task = current_user.microposts.build(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = "タスクが追加されました"
       redirect_to @task
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    # @task = Task.find(params[:id])
+    @task = Task.find(params[:id])
     @task.destroy
     
     flash[:success] = "Task は正常に削除されました"

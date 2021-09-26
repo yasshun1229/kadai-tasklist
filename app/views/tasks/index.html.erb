@@ -1,18 +1,12 @@
-<% if logged_in %>
+<h3>ログインが完了しました</h3>
 
-  <h3>ログインが完了しました</h3>
-  
-  <h1><%= current_user.name %>さんのタスク一覧</h1>
-  
-  <ul>
-    <% @tasks.each do |task| %>
-      <li><%= link_to task.id, task %> : <%= task.content %> &gt; <%= task.status %></li>
-    <% end %>
-  </ul>
-  
-  <%= link_to "新規タスクの追加", new_task_path %>
-  <%= link_to "ログアウト", login_path %>
+<h1><%= current_user.name %>さんのタスク一覧</h1>
 
-<% else %>
-  <%= link_to "ログインしていない場合は、こちらにリダイレクトしてください", login_path %>
-<% end %>
+<ul>
+  <% @tasks.each do |task| %>
+    <li><%= link_to task.id, task %> : <%= task.content %> &gt; <%= task.status %></li>
+  <% end %>
+</ul>
+
+<%= link_to "新規タスクの追加", new_task_path %>
+<%= link_to "ログアウト", login_path %>

@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :new, :edit]
-  before_action :current_user, only: [:destroy]
+  before_action :require_user_logged_in # ログインすれば誰でもOK
+  before_action :currect_user, only: [:new, :edit, :update, :destroy, :create] # 自分しかダメ【ここが大事】
   
   def index
     @tasks = Task.all
   end
   
-  def show 
+  def show
     @task = Task.find(params[:id])
   end
   
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = "タスクが追加されました"
-      redirect_to @task
+      redirect_to root_path
     else
       @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
       flash.now[:danger] = "Task が追加されませんでした"
@@ -27,12 +27,10 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @task = Task.find(params[:id])
   end
   
   def update
-    @task = Task.find(params[:id])
-    
+
     if @task.update(task_params)
       flash[:success] = "Task は正常に更新されました"
       redirect_to @task
@@ -43,7 +41,6 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
     
     flash[:success] = "Task は正常に削除されました"
@@ -53,14 +50,15 @@ class TasksController < ApplicationController
   private
 
   # Strong Parameter
-  def task_params
-    params.require(:task).permit(:content, :status)
+  
+  def currect_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    # unless @task
+      # redirect_to root_path
+    # end
   end
   
-  def corrent_user
-    @task = current_user.tasks.find_by(id: params[:id])
-    unless @task
-      redirect_to root_path
-    end
+  def task_params
+    params.require(:task).permit(:content, :status)
   end
 end

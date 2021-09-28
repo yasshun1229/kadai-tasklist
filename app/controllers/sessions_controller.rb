@@ -1,16 +1,4 @@
 class SessionsController < ApplicationController
-  def index
-  end
-  
-  def show
-    if logged_in?
-      @task = current_user.tasks.build # form_with 用
-      @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
-    end
-  end
-  
-  def new
-  end
 
   def create
     email = params[:session][:email].downcase
@@ -22,12 +10,6 @@ class SessionsController < ApplicationController
       flash.now[:danger] = "ログインに失敗しました"
       render :new
     end
-  end
-  
-  def edit
-  end
-  
-  def update
   end
 
   def destroy

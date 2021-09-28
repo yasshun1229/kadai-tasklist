@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in # ログインすれば誰でもOK
-  before_action :currect_user, only: [:new, :edit, :update, :destroy, :create] # 自分しかダメ【ここが大事】
+  # before_action :currect_user, only: [:show, :new, :edit, :update, :destroy, :create] # 自分しかダメ【ここが大事】
   
   def index
     @tasks = Task.all
+    @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
   end
   
   def show
@@ -26,8 +27,8 @@ class TasksController < ApplicationController
     end
   end
   
-  def edit
-  end
+  # def edit
+  # end
   
   def update
 
@@ -42,7 +43,6 @@ class TasksController < ApplicationController
   
   def destroy
     @task.destroy
-    
     flash[:success] = "Task は正常に削除されました"
     redirect_to tasks_url
   end
@@ -51,14 +51,14 @@ class TasksController < ApplicationController
 
   # Strong Parameter
   
-  def currect_user
-    @task = current_user.tasks.find_by(id: params[:id])
-    # unless @task
-      # redirect_to root_path
-    # end
-  end
-  
   def task_params
     params.require(:task).permit(:content, :status)
+  end
+  
+  def currect_user
+    @task = current_user.tasks.find_by(id: params[:id])
+  #   # unless @task
+  #     # redirect_to root_path
+  #   # end
   end
 end

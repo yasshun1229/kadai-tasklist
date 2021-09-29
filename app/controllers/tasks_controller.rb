@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   
   def index
     @tasks = Task.all
-    @pagy, @tasks, @user_id = pagy(current_user.tasks.order(id: :desc))
+    @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
   end
   
   def show

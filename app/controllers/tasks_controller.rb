@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   
   def index
     @tasks = Task.all
-    @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
+    @pagy, @tasks, @user_id = pagy(current_user.tasks.order(id: :desc))
   end
   
   def show
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
       flash[:success] = "タスクが追加されました"
       redirect_to root_path
     else
-      @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
+      # @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
       flash.now[:danger] = "Task が追加されませんでした"
       render :new
     end
@@ -57,8 +57,8 @@ class TasksController < ApplicationController
   
   def currect_user
     @task = current_user.tasks.find_by(id: params[:id])
-  #   # unless @task
-  #     # redirect_to root_path
-  #   # end
+    unless @task
+      redirect_to root_path
+    end
   end
 end

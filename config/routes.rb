@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   post "login", to: "sessions#new"
   resources :tasks, :users
   
-  resources :tasks, only: [:show, :new, :edit, :update, :destroy, :create] # 変
+  resources :tasks
 end

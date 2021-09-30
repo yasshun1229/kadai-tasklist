@@ -1,14 +1,13 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in # ログインすれば誰でもOK
-  # before_action :currect_user, only: [:show, :new, :edit, :update, :destroy, :create] # 自分しかダメ【ここが大事】
+  before_action :currect_user, only: [:show, :edit, :update, :destroy] # 自分しかダメ【ここが大事】
   
   def index
-    @tasks = Task.all
-    @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
+    # @tasks = Task.all
+    @tasks = current_user.tasks.order(id: :desc)
   end
   
   def show
-    @task = Task.find(params[:id])
   end
   
   def new
@@ -21,14 +20,10 @@ class TasksController < ApplicationController
       flash[:success] = "タスクが追加されました"
       redirect_to root_path
     else
-      # @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
       flash.now[:danger] = "Task が追加されませんでした"
       render :new
     end
   end
-  
-  # def edit
-  # end
   
   def update
 
